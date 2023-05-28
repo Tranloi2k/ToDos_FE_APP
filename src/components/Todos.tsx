@@ -21,6 +21,7 @@ import { Todo } from '../types/Todo'
 interface TodosProps {
   auth: Auth
   history: History
+
 }
 
 interface TodosState {
@@ -42,6 +43,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
 
   onEditButtonClick = (todoId: string) => {
     this.props.history.push(`/todos/${todoId}/edit`)
+
   }
 
   onTodoCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
@@ -49,6 +51,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
       const dueDate = this.calculateDueDate()
       const newTodo = await createTodo(this.props.auth.getIdToken(), {
         name: this.state.newTodoName,
+        status: "in process",
         dueDate
       })
       this.setState({
@@ -77,8 +80,10 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
       await patchTodo(this.props.auth.getIdToken(), todo.todoId, {
         name: todo.name,
         dueDate: todo.dueDate,
+        status: todo.status,
         done: !todo.done
       })
+
       this.setState({
         todos: update(this.state.todos, {
           [pos]: { done: { $set: !todo.done } }
@@ -168,12 +173,16 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
                   checked={todo.done}
                 />
               </Grid.Column>
-              <Grid.Column width={10} verticalAlign="middle">
+              <Grid.Column width={7} verticalAlign="middle">
                 {todo.name}
+              </Grid.Column>
+              <Grid.Column width={3} floated="right">
+                Staus: {todo.status}
               </Grid.Column>
               <Grid.Column width={3} floated="right">
                 {todo.dueDate}
               </Grid.Column>
+
               <Grid.Column width={1} floated="right">
                 <Button
                   icon

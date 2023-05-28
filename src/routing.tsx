@@ -28,7 +28,7 @@ export const makeAuthRouting = () => {
         />
         <Route
           render={props => {
-            return <App auth={auth} {...props} />
+            return <App todo={undefined} auth={auth} {...props} />
           }}
         />
       </div>

@@ -7,12 +7,14 @@ import { EditTodo } from './components/EditTodo'
 import { LogIn } from './components/LogIn'
 import { NotFound } from './components/NotFound'
 import { Todos } from './components/Todos'
+import { UpdateTodo } from './components/UpdateTodo'
 
 export interface AppProps {}
 
 export interface AppProps {
   auth: Auth
   history: any
+  todo: any
 }
 
 export interface AppState {}
@@ -100,7 +102,7 @@ export default class App extends Component<AppProps, AppState> {
           path="/todos/:todoId/edit"
           exact
           render={props => {
-            return <EditTodo {...props} auth={this.props.auth} />
+            return <UpdateTodo {...props} auth={this.props.auth} />
           }}
         />
 
